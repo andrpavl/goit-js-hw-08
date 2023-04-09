@@ -12,13 +12,17 @@ const saveInLocal = throttle(() => {
   localStorage.setItem('feedback-form-state', JSON.stringify(inputData));
 }, 500);
  
-emailInput.addEventListener('input', saveInLocal);
-messageInput.addEventListener('input', saveInLocal);
+form.addEventListener('input', saveInLocal);
 
-const loadFromLocal = localStorage.getItem('feedback-form-state');
+
+const loadFromLocal = JSON.parse(localStorage.getItem('feedback-form-state'));
 if (loadFromLocal) {
-    JSON.parse(loadFromLocal) ?? [];
-}
+    emailInput.value = loadFromLocal.email;
+    messageInput.value = loadFromLocal.message;
+} else {
+    emailInput.value = '';
+    messageInput.value = '';
+  };
 
 form.addEventListener('submit', event => {
     event.preventDefault();
